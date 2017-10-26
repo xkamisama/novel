@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+    <constant name="struts.enable.DynamicMethodInvocation" value="true" />
+    <constant name="struts.devMode" value="false" />
+    <!-- action实例的初始化方式spring ioc -->
+    <constant name="struts.objectFactory" value="spring"/>
+    <package name="sys" namespace="/sys" extends="struts-default,json-default">
+    <!-- 拦截器声明 -->
+    <interceptors>
+    	<interceptor name="loginInterceptor" class="com.xkami.util.LoginInterceptor">
+    		<!-- action的name -->
+    		<param name="loginRegister">loginAndRegisterAction</param>
+    	</interceptor>
+    	<!-- 拦截器栈声明 -->
+    	<interceptor-stack name="loginInterceptorStack">
+    		<interceptor-ref name="loginInterceptor"></interceptor-ref>
+    		<interceptor-ref name="defaultStack"></interceptor-ref>
+    	</interceptor-stack>
+    </interceptors>
+    <!-- 拦截器调用 -->
+    <default-interceptor-ref name="loginInterceptorStack"></default-interceptor-ref>
+    <global-results>
+    	<result name="login">/login.jsp</result>
+    	<result name="register">/register</result>
+    	<result name="fail">/fail.jsp</result>
+    	<result name="success">/success.jsp</result>
+    	<result name="sysException">/error.jsp</result>
+    	<result name="test">/test.jsp</result>
+    	<result name="json" type="json">
+    		<param name="root">json</param>
+    	</result>
+    </global-results>
+    <global-exception-mappings>
+    	<exception-mapping result="sysException" exception="java.sql.SQLException"></exception-mapping>
+    </global-exception-mappings>
+    </package>
+    <!-- 所有业务控制器子业务在这里注册 -->
+    <include file="com/xkami/action/struts2/userAction.xml"></include>
+    
+</struts>

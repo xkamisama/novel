@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	<!-- 用户相关业务模块 -->
+	<package name="user" namespace="/user" extends="sys">
+		<!-- 登录注册的action业务 -->
+		<action name="loginAndRegisterAction" class="userAction">
+			<interceptor-ref name="defaultStack" />
+			<interceptor-ref name="cookieProvider"/>
+			<interceptor-ref name="cookie">
+				<param name="cookiesName">recordId, token</param>
+				<param name="cookiesValue">*</param>
+			</interceptor-ref>
+			<result name="success">/success.jsp</result>
+			<result name="login">/login.jsp</result>
+			<result name="register">/register.jsp</result>
+			<result name="index">/index.jsp</result>
+			<result name="main" type="redirect">/server/main.jsp</result>
+		</action>
+		<!-- 主体管理user的action业务 -->
+		<action name="userManagerAction" class="userActionn">
+
+		</action>
+	</package>
+</struts>

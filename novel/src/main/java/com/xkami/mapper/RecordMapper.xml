@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xkami.dao.RecordDao">
+ <insert id="saveRecord" parameterType="Record">
+ 	INSERT INTO record (record_id,user_id,ip,token,login_time) 
+ 	VALUES (#{recordId},#{userId},#{ip},#{token},#{loginTime})
+ </insert>
+ <select id="getRecordByUserId" parameterType="String" resultMap="recordMap">
+ 	SELECT record_id,user_id,ip,token,login_time FROM record WHERE user_id=#{userId}
+ </select>
+ <select id="getRecord" parameterType="String" resultMap="recordMap">
+ 	SELECT record_id,user_id,ip,token,login_time FROM record WHERE record_id=#{recordId}
+ </select>
+ <update id="updateRecord" parameterType="Record">
+ 	UPDATE record SET ip=#{ip},token=#{token},login_time=#{loginTime} WHERE user_id=#{userId}
+ </update>
+ <resultMap type="Record" id="recordMap">
+ 	<id property="recordId" column="record_id"></id>
+ 	<result property="userId" column="user_id"/>
+ 	<result property="ip" column="ip"/>
+ 	<result property="token" column="token"/>
+ 	<result property="loginTime" column="login_time"/>
+ </resultMap>
+</mapper>

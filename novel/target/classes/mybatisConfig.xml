@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+<!-- 配置sql中的参数别名 -->
+<typeAliases>
+<typeAlias type="com.xkami.entity.User" alias="User"/>
+<typeAlias type="com.xkami.entity.Record" alias="Record"/>
+</typeAliases>
+<mappers>
+<!-- 注册sql mapper -->
+<mapper resource="com/xkami/mapper/UserMapper.xml"/>
+<mapper resource="com/xkami/mapper/RecordMapper.xml"/>
+ <!-- ....... -->
+</mappers>
+</configuration>
