@@ -21,8 +21,8 @@
 			<result name="main" type="redirect">/server/main.jsp</result>
 		</action>
 		<!-- 主体管理user的action业务 -->
-		<action name="userManagerAction" class="userActionn">
-
+		<action name="userManagerAction" class="userAction">
+			<result name="index" type="redirect">/index.jsp</result>
 		</action>
 	</package>
 </struts>

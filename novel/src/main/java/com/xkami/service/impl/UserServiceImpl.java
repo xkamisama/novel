@@ -10,9 +10,10 @@ import com.xkami.util.DesUtil;
 import com.xkami.util.IdUtil;
 import com.xkami.util.Md5Util;
 import com.xkami.util.RegexUtil;
+import com.xkami.util.StaticUtil;
 
 public class UserServiceImpl implements UserService {
-	String baseKey;
+	
   	UserDao userDao;
   	RecordDao recordDao;
 	public RecordDao getRecordDao() {
@@ -23,13 +24,7 @@ public class UserServiceImpl implements UserService {
 		this.recordDao = recordDao;
 	}
 
-	public String getBaseKey() {
-		return baseKey;
-	}
-
-	public void setBaseKey(String baseKey) {
-		this.baseKey = baseKey;
-	}
+	
 	
 	public UserDao getUserDao() {
 		return userDao;
@@ -46,10 +41,10 @@ public class UserServiceImpl implements UserService {
 		user.setStatus("0");
 		try {
 			if(user.getEmail()!=null) {
-				user.setEmail(DesUtil.encrypt(user.getEmail(), baseKey));
+				user.setEmail(DesUtil.encrypt(user.getEmail(), StaticUtil.BaseKey));
 			}
 			if(user.getPhoneNum()!=null) {
-				user.setPhoneNum(DesUtil.encrypt(user.getPhoneNum(), baseKey));
+				user.setPhoneNum(DesUtil.encrypt(user.getPhoneNum(), StaticUtil.BaseKey));
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -74,7 +69,7 @@ public class UserServiceImpl implements UserService {
 			return false;
 		}else {
 			try {
-				email = DesUtil.encrypt(email, baseKey);
+				email = DesUtil.encrypt(email, StaticUtil.BaseKey);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -135,7 +130,7 @@ public class UserServiceImpl implements UserService {
 			return false;
 		}else {
 			try {
-				phoneNum = DesUtil.encrypt(phoneNum, baseKey);
+				phoneNum = DesUtil.encrypt(phoneNum, StaticUtil.BaseKey);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -148,7 +143,7 @@ public class UserServiceImpl implements UserService {
 	public String getEmail(User user) {
 		// TODO Auto-generated method stub
 		try {
-			return DesUtil.decrypt(userDao.getEmail(user), baseKey);
+			return DesUtil.decrypt(userDao.getEmail(user), StaticUtil.BaseKey);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

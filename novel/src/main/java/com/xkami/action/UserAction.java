@@ -25,6 +25,7 @@ import com.xkami.util.CookieUtil;
 import com.xkami.util.DesUtil;
 import com.xkami.util.EmailUtil;
 import com.xkami.util.IdUtil;
+import com.xkami.util.StaticUtil;
 
 /**
  * @author Administrator
@@ -44,10 +45,12 @@ public class UserAction extends ActionSupport implements SessionAware,CookiesAwa
 	Set<Cookie> cookieSet = new HashSet<Cookie>();
 	String json;
 	String token;
-	String baseKey;
 	
 	
 	
+	public String execute() {
+		return "index";
+	}
 	/**
 	 * 使用email进行注册
 	 * @return
@@ -62,7 +65,7 @@ public class UserAction extends ActionSupport implements SessionAware,CookiesAwa
 			User tmpUser = userService.loginByUserName(user);
 			try {
 				String email = userService.getEmail(tmpUser);
-				String url = basePath+"/user/loginAndRegisterAction!activateUserByEmail"+"?token="+DesUtil.encrypt(tmpUser.getUserId(), baseKey);
+				String url = basePath+"/user/loginAndRegisterAction!activateUserByEmail"+"?token="+DesUtil.encrypt(tmpUser.getUserId(), StaticUtil.BaseKey);
 				EmailUtil.sendMessage(email, url);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -135,7 +138,7 @@ public class UserAction extends ActionSupport implements SessionAware,CookiesAwa
 	 */
 	public String activateUserByEmail() {
 		try {
-			String userId = DesUtil.decrypt(token, baseKey);
+			String userId = DesUtil.decrypt(token, StaticUtil.BaseKey);
 			if(userService.checkUserId(userId)) {
 				if(userService.activateUser(userId)) {
 					return "success";
@@ -151,6 +154,10 @@ public class UserAction extends ActionSupport implements SessionAware,CookiesAwa
 		return "fail";
 	}
 	
+	/**
+	 * 设置登录凭证的cookie
+	 * 并将设置的值存入数据库
+	 */
 	private void setRecord() {
 		HttpServletRequest request = ServletActionContext.getRequest();
 		String token = IdUtil.getUuid();
@@ -159,8 +166,8 @@ public class UserAction extends ActionSupport implements SessionAware,CookiesAwa
 		record.setLoginTime(new Date());
 		record.setIp(request.getRemoteAddr());
 		try {
-			cookieSet.add(CookieUtil.setCookie("recordId", DesUtil.encrypt(record.getRecordId(), baseKey),7));
-			cookieSet.add(CookieUtil.setCookie( "token",  DesUtil.encrypt(token, baseKey), 7));
+			cookieSet.add(CookieUtil.setCookie("recordId", DesUtil.encrypt(record.getRecordId(), StaticUtil.BaseKey),7));
+			cookieSet.add(CookieUtil.setCookie( "token",  DesUtil.encrypt(token, StaticUtil.BaseKey), 7));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -172,8 +179,8 @@ public class UserAction extends ActionSupport implements SessionAware,CookiesAwa
 		String recordId = cookies.get("recordId");
 		
 		try {
-			System.out.println("token:"+DesUtil.decrypt(token, baseKey)+
-					"recordId:"+DesUtil.decrypt(recordId, baseKey));
+			System.out.println("token:"+DesUtil.decrypt(token, StaticUtil.BaseKey)+
+					"recordId:"+DesUtil.decrypt(recordId, StaticUtil.BaseKey));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -223,12 +230,7 @@ public class UserAction extends ActionSupport implements SessionAware,CookiesAwa
 	public void setToken(String token) {
 		this.token = token;
 	}
-	public String getBaseKey() {
-		return baseKey;
-	}
-	public void setBaseKey(String baseKey) {
-		this.baseKey = baseKey;
-	}
+
 	@Override
 	public void setCookiesMap(Map<String, String> cookies) {
 		// TODO Auto-generated method stub

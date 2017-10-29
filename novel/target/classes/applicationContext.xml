@@ -35,6 +35,9 @@
 		<property name="configLocation" value="classpath:mybatisConfig.xml"></property>
 	</bean>
 	<bean id="gson" class="com.google.gson.Gson"></bean>
+	<bean id="loginInterceptor" class="com.xkami.interceptor.LoginInterceptor">
+		<property name="userService" ref="userService"></property>
+	</bean>
 	
 	
 	

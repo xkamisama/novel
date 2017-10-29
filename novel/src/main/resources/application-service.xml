@@ -14,7 +14,6 @@
 	<bean id="userService" class="com.xkami.service.impl.UserServiceImpl">
 		<property name="userDao" ref="userDao"></property>
 		<property name="recordDao" ref="recordDao"></property>
-		<property name="baseKey" value="xkamisama"></property>
 		<!-- name:当前java类的属性变量 ref：自己配置的springbean的id或name -->
 	</bean>
 	

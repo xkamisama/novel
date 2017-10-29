@@ -12,7 +12,8 @@
     <package name="sys" namespace="/sys" extends="struts-default,json-default">
     <!-- 拦截器声明 -->
     <interceptors>
-    	<interceptor name="loginInterceptor" class="com.xkami.util.LoginInterceptor">
+    	
+    	<interceptor name="loginInterceptor" class="loginInterceptor">
     		<!-- action的name -->
     		<param name="loginRegister">loginAndRegisterAction</param>
     	</interceptor>
@@ -41,5 +42,5 @@
     </package>
     <!-- 所有业务控制器子业务在这里注册 -->
     <include file="com/xkami/action/struts2/userAction.xml"></include>
-    
+    <include file="com/xkami/action/struts2/bookAction.xml"></include>
 </struts>

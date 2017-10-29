@@ -11,11 +11,13 @@
            http://www.springframework.org/schema/context
            http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 	<!-- 配置主体数据访问接口 实例化 ioc -->
-	<bean id="userAction" class="com.xkami.action.UserAction">
+	<bean id="userAction" class="com.xkami.action.UserAction" scope="prototype">
 		<property name="userService" ref="userService"></property>
 		<property name="gson" ref="gson"></property>
-		<property name="baseKey" value="xkamisama"></property>
 		<!-- name:当前java类的属性变量 ref：自己配置的springbean的id或name -->
+	</bean>
+	<bean id="bookAction" class="com.xkami.action.BookAction" scope="prototype">
+	
 	</bean>
 	
 </beans> 
