@@ -15,9 +15,7 @@ import javax.mail.internet.MimeMessage;
  *	邮箱发送工具类
  */
 public class EmailUtil {
-	private static String from="kamisama@xkami.xin";
-	private static String stmp="smtp.mxhichina.com";
-	private static String password="GIAdJaujComEtK4";
+
 	
 	/**
 	 * 发送消息
